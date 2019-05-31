@@ -10,8 +10,13 @@ public class Art {
      * @param args command line arguments
      */
 
+    //Source for planet earth ascii
     //https://www.asciiart.eu/space/planets
+
+    //Source for cromulon ascii
     //https://www.reddit.com/r/rickandmorty/comments/3rmsgf/does_anyone_have_the_ascii_art_of_the_head_saying/
+
+    //Source for explosive ascii
     //https://www.asciiart.eu/weapons/explosives
 
     public static void main(String[] args) {
