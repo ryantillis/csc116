@@ -5,7 +5,6 @@
  */
 
 import java.util.*;
-
 public class PigLatin {
     /**
      * Starts the program.

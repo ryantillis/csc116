@@ -1,3 +1,4 @@
+import java.util.*;
 /**
  * Dollar conversion calculator for csc116
  *
@@ -11,8 +12,19 @@ public class Dollars {
      * @param args no command line arguments
      */
     public static void main(String[] args) {
+        /** Console scanner */
+        Scanner console = new Scanner(System.in);
+        System.out.println("Enter the dollars to convert: ");
+
+        /**
+         * Number of dollars to convert
+         */
+        int dollarsToConvert = console.nextInt();
+
+        console.close();
+
         //Call to method to convert currency 
-        currencyCoverter(57);
+        currencyCoverter(dollarsToConvert);
     }
     /**
      * Calculates how the dollarAmount breaks into smaller bills

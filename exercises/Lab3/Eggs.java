@@ -1,3 +1,4 @@
+import java.util.*;
 /**
  * Egg price calculator for csc116
  *
@@ -12,10 +13,6 @@ public class Eggs {
      */
     public static void main(String[] args) {
         /**
-         * Number of eggs ordered
-         */
-        int numberOfTotalEggs = 27;
-        /**
          * Price per dozen eggs
          */
         double pricePerDozen = 3.25;
@@ -23,6 +20,17 @@ public class Eggs {
          * Price per egg
          */
         double pricePerEgg = .45;
+        
+        /** Console scanner */
+        Scanner console = new Scanner(System.in);
+        System.out.println("Enter the number of eggs to order: ");
+
+        /**
+         * Number of eggs ordered
+         */
+        int numberOfTotalEggs = console.nextInt();
+
+        console.close();
 
         //Call to calculation method
         eggOrderCalculator(numberOfTotalEggs, pricePerDozen, pricePerEgg);
