@@ -116,22 +116,66 @@ public class Triangle {
         // 350
         // 85.6
 
+        // //Iterates over possible x2, y2 coordinates
+        // //Updates starting coordinates
+        // for (int x2 = 0; x2 < PANEL_WIDTH; x2++){
+        //     for (int y2 = 0; y2 < PANEL_HEIGTH; y2++){
+        //         /** Test for x-coordinate of lower triangle points */
+        //         //boolean xCondition = x2 == 1 - xDelta || x2 == x1 + xDelta;
+        //         boolean xCondition = (x2 - x) % xDelta == 0 || (x - x2) % xDelta == 0;
+        //         /** Keeps track of the row */
+        //         int yDeltaFactor = 1;
+        //         if(x2 > x1) {yDeltaFactor = (x2 - x) / xDelta;}
+        //         else if(x2 < x1) {yDeltaFactor = (x - x2) / xDelta;}
+        //         /** Checks if line is within allotted rows */
+        //         boolean inRow = yDeltaFactor <= 5;
+        //         /** Test for x-coordinate of lower triangle points */
+        //         boolean yCondition = y2 > y1 && ((y2 - y) / (yDeltaFactor * yDelta)) == 1;
+        //         //boolean yCondition = y2 == y1 + yDelta;
+        //         /** Combination of x and y tests to determine if lower point */
+        //         boolean lowerPoint = xCondition && yCondition && inRow;
+                
+        //         if(lowerPoint){
+        //             g.drawLine(x1, y1, x2, y2);
+        //             //g.drawLine(x1 - xDelta, y1 + yDelta, x1 + xDelta, y1 + yDelta);
+        //         }
+        //     }
+        // }
+
         //Iterates over possible x2, y2 coordinates
         //Updates starting coordinates
-        for (int x2 = 0; x2 < PANEL_WIDTH; x2++){
-            for (int y2 = 0; y2 < PANEL_HEIGTH; y2++){
-                /** Test for x-coordinate of lower triangle points */
-                boolean xCondition = x2 == x1 - xDelta || x2 == x1 + xDelta;
-                /** Test for x-coordinate of lower triangle points */
-                boolean yCondition = y2 == y1 + yDelta;
-                /** Combination of x and y tests to determine if lower point */
-                boolean lowerPoint = xCondition && yCondition;
-                
-                if(lowerPoint){
-                    g.drawLine(x1, y1, x2, y2);
-                    g.drawLine(x1 - xDelta, y1 + yDelta, x1 + xDelta, y1 + yDelta);
-                }
+
+        /** Row tracker */
+        int rowNumber = 1;
+
+        // for (int yOffset = 0; yOffset < yDelta * 5; yOffset += yDelta){
+        //     for (int xOffset = 0; xOffset < xDelta * 5; xOffset += xDelta){
+        //             /** Test for x-coordinate of lower triangle points */
+        //             //boolean yCondition = (y2 - y) / yDelta) == Factor;
+        //             if(yOffset / rowNumber == xOffset / rowNumber){
+        //                 int x2L = x1 - rowNumber * xOffset;
+        //                 int x2R = x1 + rowNumber * xOffset;
+        //                 int y2 = y1 + rowNumber * yOffset;
+        //                 g.drawLine(x1, y1, x2L, y2);
+        //                 g.drawLine(x1, y1, x2R, y2);
+        //                 g.drawLine(x2L, y2, x2R, y2);
+        //             }
+        //         }
+        //     rowNumber++;
+        //     }
+
+        /** Number of bottom vertexes */
+        int triangleCount = 1;
+        for(int i = 1; i <= 5; i++){
+            for(int j = 1; j <= i; j++) {
+                g.drawLine(x1, y1, x1 + xDelta, y1 + yDelta);
+                g.drawLine(x1, y1, x1 - xDelta, y1 + yDelta);
+                x1 = x1 + 2 * xDelta;
             }
+            y1 = y + i * yDelta;
+            x1 = x - i * xDelta;
+            g.drawLine(x1, y1, x + i * xDelta, y1);
         }
     }
-}
+
+}  
