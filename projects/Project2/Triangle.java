@@ -22,6 +22,8 @@ public class Triangle {
     //Source for explosive ascii
     //https://www.asciiart.eu/weapons/explosives
 
+
+
     /** Width of the panel */
     public static final int PANEL_WIDTH = 600;
     /** Increment to increase loan amounts by */
@@ -31,8 +33,13 @@ public class Triangle {
     /** Starting x-coordinate */
     public static final int STARTING_X = 300;
     /** Starting y-coordinate */
-    public static final int STARTING_Y = 50;    
+    public static final int STARTING_Y = 50;
+    /** Amount to adjust x coordinate for triangle */     
+    public static final int X_DELTA = SIDE_LENGTH / 2;
+    /** Amount to adjust y coordinate for triangle */ 
+    public static final int Y_DELTA = (int) (SIDE_LENGTH * Math.sqrt(3) / 2);      
 
+    
 
     public static void main(String[] args) {
         //Console object for prompting user input
@@ -41,34 +48,46 @@ public class Triangle {
         /** Number of rows of triangles */
         int numberOfRows = 5;
         /** Red color value 1-255 */
-        int redValue = 255;
+        int redValue = 0;
         /** Green color value 1-255 */
-        int greenValue = 5;
+        int greenValue = 0;
         /** Blue color value 1-255 */
-        int blueValue = 5;
+        int blueValue = 0;
 
-        // //Gather color and row information from user
-        // System.out.print("Number of Rows(1-5): ");
-        // numberOfRows = console.nextInt();
-        // //System.out.println(numberOfRows);
-        // console.nextLine();
+        //Gather color and row information from user
+        System.out.print("Number of Rows(1-5): ");
+        /** Number of rows user input */
+        numberOfRows = console.nextInt();
+        if(numberOfRows > 5){numberOfRows = 5;}
+        else if(numberOfRows < 1){numberOfRows = 1;}
+        //System.out.println(numberOfRows);
+        console.nextLine();
 
-        // //Retrieve validated red integer value from user
-        // System.out.print("Red value (0-255): ");
-        // redValue = console.nextInt();
-        // //System.out.println(redValue);
-        // console.nextLine();
+        //Retrieve validated red integer value from user
+        System.out.print("Red value (0-255): ");
+        /** RGB value for RED */
+        redValue = console.nextInt();
+        if(redValue > 255){redValue = 255;}
+        else if(redValue < 0){redValue = 0;}
+        //System.out.println(redValue);
+        console.nextLine();
 
-        // //Retrieve validated green integer value from user
-        // System.out.print("Green value (0-255): ");
-        // greenValue = console.nextInt();
-        // //System.out.println(greenValue);
-        // console.nextLine();
+        //Retrieve validated green integer value from user
+        System.out.print("Green value (0-255): ");
+        /** RGB value for GREEN */
+        greenValue = console.nextInt();
+        if(greenValue > 255){greenValue = 255;}
+        else if(greenValue < 0){greenValue = 0;}
+        //System.out.println(greenValue);
+        console.nextLine();
 
-        // //Retrieve validated red integer value from user
-        // System.out.print("Red value (0-255): ");
-        // blueValue = console.nextInt();
-        // //System.out.println(blueValue);
+        //Retrieve validated red integer value from user
+        System.out.print("Red value (0-255): ");
+        /** RGB value for BLUE */
+        blueValue = console.nextInt();
+        if(blueValue > 255){blueValue = 255;}
+        else if(blueValue < 0){blueValue = 0;}
+        //System.out.println(blueValue);
 
         //Retrieving the color object from java.awt.Color using the RGB values
         Color rgbValue = new Color(redValue, greenValue, blueValue, 255);
@@ -78,6 +97,20 @@ public class Triangle {
         Graphics triangleGraphic = panel.getGraphics();
         panel.setBackground(Color.WHITE);
         drawTriangle(triangleGraphic, rgbValue, STARTING_X, STARTING_Y, SIDE_LENGTH);
+
+         /** Startin x-coordinate */
+         int x1 = STARTING_X;
+         //** Starting y-coordinate */
+         int y1 = STARTING_Y;
+ 
+        for(int i = 1; i <= numberOfRows; i++){
+            for(int j = 1; j <= i; j++) {
+                drawTriangle(triangleGraphic, rgbValue, x1, y1, SIDE_LENGTH);
+                x1 = x1 + 2 * X_DELTA;
+            }
+            y1 = STARTING_Y + i * Y_DELTA;
+            x1 = STARTING_X - i * X_DELTA;
+        }
 
         console.close();
 
@@ -96,86 +129,20 @@ public class Triangle {
 
     //Draws an equilateral triangle with topmost point at (x,y) with the given side length and color
     public static void drawTriangle(Graphics g, Color color, int x, int y, int sideLength) {
-        //** 2-D integer array representing the pixels on the panel */
-        //Color[][] displayPixels = new Color[PANEL_WIDTH][PANEL_HEIGTH];
-        //** Dimensions of the displayPixels array */
-        //int arraySize = 0;
-
         /** Set color to user input*/
         g.setColor(color);
+
         /** Startin x-coordinate */
-        int x1 = x;
+        int x1 = sideLength / 2;
         //** Starting y-coordinate */
-        int y1 = y;   
-        /** Amount to adjust x coordinate for triangle */     
-        int xDelta = SIDE_LENGTH / 2;
-        /** Amount to adjust y coordinate for triangle */ 
-        int yDelta = SIDE_LENGTH * (int) Math.sqrt(3) / 2;
+        int y1 = (int) (sideLength * Math.sqrt(3) / 2);
 
-        // 250
-        // 350
-        // 85.6
-
-        // //Iterates over possible x2, y2 coordinates
-        // //Updates starting coordinates
-        // for (int x2 = 0; x2 < PANEL_WIDTH; x2++){
-        //     for (int y2 = 0; y2 < PANEL_HEIGTH; y2++){
-        //         /** Test for x-coordinate of lower triangle points */
-        //         //boolean xCondition = x2 == 1 - xDelta || x2 == x1 + xDelta;
-        //         boolean xCondition = (x2 - x) % xDelta == 0 || (x - x2) % xDelta == 0;
-        //         /** Keeps track of the row */
-        //         int yDeltaFactor = 1;
-        //         if(x2 > x1) {yDeltaFactor = (x2 - x) / xDelta;}
-        //         else if(x2 < x1) {yDeltaFactor = (x - x2) / xDelta;}
-        //         /** Checks if line is within allotted rows */
-        //         boolean inRow = yDeltaFactor <= 5;
-        //         /** Test for x-coordinate of lower triangle points */
-        //         boolean yCondition = y2 > y1 && ((y2 - y) / (yDeltaFactor * yDelta)) == 1;
-        //         //boolean yCondition = y2 == y1 + yDelta;
-        //         /** Combination of x and y tests to determine if lower point */
-        //         boolean lowerPoint = xCondition && yCondition && inRow;
-                
-        //         if(lowerPoint){
-        //             g.drawLine(x1, y1, x2, y2);
-        //             //g.drawLine(x1 - xDelta, y1 + yDelta, x1 + xDelta, y1 + yDelta);
-        //         }
-        //     }
-        // }
-
-        //Iterates over possible x2, y2 coordinates
-        //Updates starting coordinates
-
-        /** Row tracker */
-        int rowNumber = 1;
-
-        // for (int yOffset = 0; yOffset < yDelta * 5; yOffset += yDelta){
-        //     for (int xOffset = 0; xOffset < xDelta * 5; xOffset += xDelta){
-        //             /** Test for x-coordinate of lower triangle points */
-        //             //boolean yCondition = (y2 - y) / yDelta) == Factor;
-        //             if(yOffset / rowNumber == xOffset / rowNumber){
-        //                 int x2L = x1 - rowNumber * xOffset;
-        //                 int x2R = x1 + rowNumber * xOffset;
-        //                 int y2 = y1 + rowNumber * yOffset;
-        //                 g.drawLine(x1, y1, x2L, y2);
-        //                 g.drawLine(x1, y1, x2R, y2);
-        //                 g.drawLine(x2L, y2, x2R, y2);
-        //             }
-        //         }
-        //     rowNumber++;
-        //     }
-
-        /** Number of bottom vertexes */
-        int triangleCount = 1;
-        for(int i = 1; i <= 5; i++){
-            for(int j = 1; j <= i; j++) {
-                g.drawLine(x1, y1, x1 + xDelta, y1 + yDelta);
-                g.drawLine(x1, y1, x1 - xDelta, y1 + yDelta);
-                x1 = x1 + 2 * xDelta;
-            }
-            y1 = y + i * yDelta;
-            x1 = x - i * xDelta;
-            g.drawLine(x1, y1, x + i * xDelta, y1);
-        }
+        //** Polygon object to form triangle */
+        Polygon triangle = new Polygon();
+        triangle.addPoint(x, y);
+        triangle.addPoint(x + X_DELTA, y + Y_DELTA);
+        triangle.addPoint(x - X_DELTA, y + Y_DELTA);
+        g.drawPolygon(triangle);
     }
 
 }  
