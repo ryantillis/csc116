@@ -1,7 +1,7 @@
 import java.util.*;
 import java.awt.*;
 /**
- * This is an example class that illustrates printing a message to the screen
+ * Program that converts decimal values to binary
  *
  * @author Ryan Tillis
  */
@@ -13,38 +13,82 @@ public class DecimalToBinary {
      */
     public static void main(String[] args) {
         Scanner console = new Scanner(System.in);
-        int integerToConvert;
+        int intConvert = 0;
         String binaryString;
 
         do {
-            System.out.print("Choose an integer (-1 to exit): ");
-            integerToConvert = console.nextInt();
-            //boolean intTest
-            if(integerToConvert >= 0){
-                binaryString = convertToBinary(integerToConvert);
+            //Loop to ensure integer value
+            //(intConvert != -1) (ALWAYS)
+            while(true) {
+                System.out.print("Choose an integer (-1 to exit): ");
+                if(console.hasNextInt()){
+                    //console.hasNextInt() (ALWAYS)
+                    intConvert = console.nextInt();    
+                    break;
+                }
+                else {
+                    //console.hasNextInt() (NEVER)
+                    System.out.println("Invalid Input. Please enter an integer.");
+                    console.next();
+                }
+                console.nextLine();
+            }
+
+            //Test for negative int
+            //(intConvert != -1) (ALWAYS)
+            if(intConvert >= 0){
+                //intConvert >= 0 (ALWAYS)
+                binaryString = convertToBinary(intConvert);
                 System.out.println(binaryString);
             }
             else {
-                System.out.println("Negative value: " + integerToConvert);
+                //intConvert >= 0 (NEVER)
+                if(intConvert != -1) {System.out.println("Negative value: " + intConvert); }
             }
-        } while (integerToConvert != -1);
+
+        } while (intConvert != -1);
 
         console.close();
     }
-
-    public static String convertToBinary(int integerToConvert){
+    /**
+     * Starts the program.
+     *
+     * @param intConvert Integer to be converted to binary
+     * @return binaryString for the converted binary value
+     */
+    public static String convertToBinary(int intConvert){
+        /** Binary string in reverse */
         String reverseBinaryString = "";
-        int dividend = integerToConvert;
+        /** Dividend */
+        int dividend = intConvert;
+
+        //Do while loop for getting remainders
         do {
+            //dividend > 0 && intConvert > 0 (SOMETIMES)
             if(dividend % 2 == 0) {
+                //dividend % 2 == 0 (ALWAYS)
                 reverseBinaryString += 0;
                 dividend = dividend / 2;
             } else if (dividend % 2 == 1){
+                //dividend % 2 == 1 (ALWAYS)
+                //dividend % 2 == 0 (NEVER)
                 reverseBinaryString += 1;
                 dividend = (dividend - 1) / 2;
             }
-        } while(dividend > 0);
-        String binaryString = new StringBuilder(reverseBinaryString).reverse().toString();
+        } while (dividend > 0 && intConvert > 0);
+
+        /** Binary String to return in correct order */
+        String binaryString = "";
+        
+        //Check for negative values 
+        if (intConvert >= 0) {
+            //intConvert >= 0 (ALWAYS)
+            binaryString = new StringBuilder(reverseBinaryString).reverse().toString();
+        } else {
+            //intConvert >= 0 (NEVER)
+            throw new IllegalArgumentException("Negative value: " + intConvert);
+        }
+
         return binaryString;
     }
 }
