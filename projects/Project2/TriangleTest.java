@@ -11,7 +11,7 @@ public class TriangleTest {
      * @param args command line arguments (not used)
      */
     public static void main(String[] args) {
-        int size = 50;
+        //int size = 50;
         DrawingPanel panel = new DrawingPanel(500, 500);
         Graphics g = panel.getGraphics();
         Triangle.drawTriangle(g, Color.RED, 200, 200, 100); 

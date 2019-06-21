@@ -1,5 +1,5 @@
 import java.awt.*;
-import java.util.*;
+//import java.util.*;
 
 /** 
 * Animation Program for csc116
@@ -30,15 +30,12 @@ public class Animation {
         
         DrawingPanel panel = new DrawingPanel(WIDTH, HEIGHT);
         Graphics g = panel.getGraphics();
-        
-
-        Color[][] pixelArray = new Color[1000][1000];
 
 
         drawBackground(g);
 
-        int x = INITIAL_X;
-        int y = INITIAL_Y;
+        //int x = INITIAL_X;
+        //int y = INITIAL_Y;
         for(int j = 0; j < 3; j++){
             for (int i = 0; i < NUMBER_OF_UPDATES; i++) {
                 drawFigure(g, 600 - 15 * i, 575 + j * -25);
