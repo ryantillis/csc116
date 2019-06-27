@@ -7,14 +7,12 @@ import java.util.*;
  * 
  * @author Dr. Sarah S. Heckman
  * @author Dr. Jessica Young Schmidt
- * @author Thomas Tillis
+ * @author YOUR NAME
  */
 public class FormatJavaProgram {
 
     /** Constant representing number of spaces to indent */
     public static final int NUM_SPACES = 4;
-    /** File extension length */
-    public static final int EXT_LEN = 5;
 
     /**
      * Starts the program
@@ -65,14 +63,7 @@ public class FormatJavaProgram {
      */
     public static File getInputFile(Scanner console) {
         File file = null;
-        // DONE: write method
-        //Get File name from user input
-        System.out.print("Enter a file name to process: ");
-        file = new File(console.next());
-        while (!file.exists()) {
-            System.out.print("File doesn't exist. " + "Enter a file name to process: ");
-            file = new File(console.next());
-        }
+        // TODO: write method
         return file;
     }
 
@@ -85,14 +76,8 @@ public class FormatJavaProgram {
      */
     public static Scanner getInputScanner(File file) {
         Scanner inputFile = null;
-        // DONE: write method that uses a try/catch. Catch should print error
+        // TODO: write method that uses a try/catch. Catch should print error
         // message, but NOT end program.
-        try {
-            inputFile = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            System.out.println("Input file not found. ");
-            System.out.println(e.getMessage());
-        }
         return inputFile;
     }
 
@@ -108,18 +93,9 @@ public class FormatJavaProgram {
         PrintStream outputFile = null;
         // HINT: use File getName() to get name of file to use to set up name of
         // formatted file.
-        int nameLength = file.getName().length();
-        String nameFormatted = file.getName().substring(0, nameLength - EXT_LEN)
-                                    + "_Formatted.java";
 
-        // DONE: write method that uses a try/catch. Catch should print error
+        // TODO: write method that uses a try/catch. Catch should print error
         // message, but NOT end program.
-        try {
-            outputFile = new PrintStream(new File(nameFormatted));
-        } catch (FileNotFoundException e) {
-            System.out.println("Printstream not established. ");
-            System.out.println(e.getMessage());
-        }
         return outputFile;
     }
 
@@ -135,22 +111,27 @@ public class FormatJavaProgram {
             String line = inputFile.nextLine().trim(); // trim() cuts of leading
                                                        // and ending whitespace
 
-            if (line.contains("}") && line.contains("{")) {
-                indentLevels -= NUM_SPACES;
+            //TODO: Along with updating the tests below, you will also need to consider how 
+            // you will need to update indentLevels within each block of the if/else structure
             
-                outputFile.println(getFormattedLine(line, indentLevels));
-            
-                indentLevels += NUM_SPACES;
+            // TODO: For added challenge, uncomment (remove /* and */) and add
+            // condition for opening and closing braces on same line
+            /*
+              if (true) { // If line contains both } and { like a catch line or else 
+              // TODO: update test from "true"
+              
+              outputFile.println(getFormattedLine(line, indentLevels));
+              
+              } else
+             */
+            if (true) { // If the line only contains a closing bracket
+                // TODO: update test from "true"
 
-            } else if (!line.contains("}") && line.contains("{")) {
-              // DONE: update test from "true"
-                indentLevels += NUM_SPACES;
                 outputFile.println(getFormattedLine(line, indentLevels));
 
-            } else if (line.contains("}") && !line.contains("{")) { 
-                // If the line only contains an opening bracket
-                // DONE: update test from "true"
-                indentLevels -= NUM_SPACES;
+            } else if (true) { // If the line only contains an opening bracket
+                // TODO: update test from "true"
+
                 outputFile.println(getFormattedLine(line, indentLevels));
 
             } else { // All other lines
@@ -170,9 +151,7 @@ public class FormatJavaProgram {
      */
     public static String getFormattedLine(String line, int indentLevels) {
         String formattedLine = "";
-        String indents = " ".repeat(indentLevels);
-        // DONE: write method to format line with proper indentation
-        formattedLine = indents + line;
+        // TODO: write method to format line with proper indentation
         return formattedLine;
     }
 
