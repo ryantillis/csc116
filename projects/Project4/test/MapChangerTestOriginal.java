@@ -24,40 +24,7 @@ public class MapChangerTest extends TestCase {
         assertFalse(desc, actual);
     }
 
-    @Test
-    public void testIsValidCharacter3() {
-        String desc = "MapChanger.isValidCharacter('+');";
-        boolean actual = MapChanger.isValidCharacter('+');
-        assertTrue(desc, actual);
-    }
-
-    @Test
-    public void testIsValidCharacter4() {
-        String desc = "MapChanger.isValidCharacter('\\');";
-        boolean actual = MapChanger.isValidCharacter('\\');
-        assertTrue(desc, actual);
-    }
-
-    @Test
-    public void testIsValidCharacter5() {
-        String desc = "MapChanger.isValidCharacter('/');";
-        boolean actual = MapChanger.isValidCharacter('/');
-        assertTrue(desc, actual);
-    }
-
-    @Test
-    public void testIsValidCharacter6() {
-        String desc = "MapChanger.isValidCharacter('~');";
-        boolean actual = MapChanger.isValidCharacter('~');
-        assertTrue(desc, actual);
-    }
-
-    @Test
-    public void testIsValidCharacter7() {
-        String desc = "MapChanger.isValidCharacter('j');";
-        boolean actual = MapChanger.isValidCharacter('j');
-        assertFalse(desc, actual);
-    }
+    // Add 5 more test cases here for the isValidCharacter() method
 
     @Test
     public void testUncoverLine1() {
@@ -67,21 +34,7 @@ public class MapChangerTest extends TestCase {
         assertEquals(desc, expected, actual);
     }
 
-    @Test
-    public void testUncoverLine2() {
-        String desc = "MapChanger.uncoverLine(\"%&[[+]#&^^$@%+\");";
-        String expected = "    +   //   +";
-        String actual = MapChanger.uncoverLine("%&[[+]#&//$@%+");
-        assertEquals(desc, expected, actual);
-    }
-
-    @Test
-    public void testUncoverLine3() {
-        String desc = "MapChanger.uncoverLine(\"+%&[/\\[]~~~~~~~~#&+\");";
-        String expected = "+   /\\  ~~~~~~~~  +";
-        String actual = MapChanger.uncoverLine("+%&[/\\[]~~~~~~~~#&+");
-        assertEquals(desc, expected, actual);
-    }
+    // Add 2 more test cases here for the uncoverLine() method
     
     @Test
     public void testObscureLine1() {
@@ -92,32 +45,7 @@ public class MapChangerTest extends TestCase {
         assertEquals(desc, expected, actual);
     }
 
-    @Test
-    public void testObscureLine2() {
-        Random rand = new Random(1);
-        String desc = "MapChanger.obscureLine(\" / \\ ~ \", rand);";
-        String expected = "%/&\\[~[";
-        String actual = MapChanger.obscureLine(" / \\ ~ ", rand);
-        assertEquals(desc, expected, actual);
-    }
-
-    @Test
-    public void testObscureLine3() {
-        Random rand = new Random(1);
-        String desc = "MapChanger.obscureLine(\"                 \", rand);";
-        String expected = "%&[[]#&$@%&!]##@!";
-        String actual = MapChanger.obscureLine("                 ", rand);
-        assertEquals(desc, expected, actual);
-    }
-
-    @Test
-    public void testObscureLine4() {
-        Random rand = new Random(1);
-        String desc = "MapChanger.obscureLine(\"X   ~~~~~~~~  + /\\\", rand);";
-        String expected = "X%&[~~~~~~~~[]+#/\\";
-        String actual = MapChanger.obscureLine("X   ~~~~~~~~  + /\\", rand);
-        assertEquals(desc, expected, actual);
-    }
+    // Add 3 more test cases here for the obscureLine() method
 
     @Test
     public void testProcessFile() throws FileNotFoundException {

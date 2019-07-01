@@ -1,5 +1,8 @@
-import java.util.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Program MapChanger
@@ -22,32 +25,45 @@ public class MapChanger {
      * @param args Command line arguments
      */
     public static void main(String args[]){
+        System.out.print("\n                        MapChanger\n" +
+                        "=========================================================\n" +
+                        "The MapChanger program can obscure a map or uncover it.\n" +
+                        "You will be prompted to type o for obscure, u for uncover,\n" +
+                        "or q for quit. Then you will be required to enter the \n" +
+                        "relative path of the input file (map) and the relative path\n" +
+                        "of the output file. Optionally, you can enter a seed value\n" +
+                        "to generate random numbers. The program will continue to \n" +
+                        "prompt the user for values until quit or q is typed.     \n\n");
         //Console scanner
         Scanner console = new Scanner(System.in);
         //Random object
         Random rand = new Random();
-        //Get map action (obscure, uncover, or quit)
-        char mapAction = getMapAction(console);
-        //Get input scanner
-        Scanner input = getInputScanner(console);
-        //Get output file
-        PrintStream output = getOutputPrintStream(console);
-        //Obscure boolean
-        boolean obscure = (mapAction == 'o');
 
-        //Prompt for seed value
-        if(obscure) {
-            System.out.print("Do you want to use a seed? (Y or N):");
-            char seedAction = console.next().toLowerCase().charAt(0);
-            if(seedAction == 'y'){
-                System.out.print("Enter the seed value: ");
-                Long seedLong = console.nextLong();
-                rand.setSeed(seedLong);
+        while(true) {
+            //Get map action (obscure, uncover, or quit)
+            char mapAction = getMapAction(console);
+            //Get input scanner
+            Scanner input = getInputScanner(console);
+            //Get output file
+            PrintStream output = getOutputPrintStream(console);
+            //Obscure boolean
+            boolean obscure = (mapAction == 'o');
+
+            //Prompt for seed value
+            if(obscure) {
+                System.out.print("Do you want to use a seed? (Y or N): ");
+                char seedAction = console.next().toLowerCase().charAt(0);
+                if(seedAction == 'y'){
+                    System.out.print("Enter the seed value: ");
+                    Long seedLong = console.nextLong();
+                    rand.setSeed(seedLong);
+                }
             }
-        }
 
-        //Process file
-        processFile(obscure, input, output, rand);
+            //Process file
+            processFile(obscure, input, output, rand);
+            System.out.println("");
+        }
 
     }
 
@@ -145,7 +161,7 @@ public class MapChanger {
      * @param output Printstream on output file
      * @param rand Random number for obscure rules
      */
-    public static void processFile (boolean obscure, Scanner input, PrintStream output, Random rand){
+    public static void processFile(boolean obscure, Scanner input, PrintStream output, Random rand){
         //Process line by line
         while(input.hasNextLine()) {
             String line = input.nextLine();
@@ -153,10 +169,12 @@ public class MapChanger {
                 String obscureLine = obscureLine(line, rand);
                 output.print(obscureLine);
                 if(input.hasNextLine()) {output.print("\n"); }
+                else {System.out.println("The map has been obscured."); }
             } else {
                 String uncoveredLine = uncoverLine(line);
                 output.print(uncoveredLine);
                 if(input.hasNextLine()) {output.print("\n"); }
+                else {System.out.println("The map has been uncovered."); }
             }
         }
     }
@@ -168,7 +186,7 @@ public class MapChanger {
      * 
      * @param line String line from input file
      * @param rand Random number generator for obscure rules
-     * @return
+     * @return obscureLine after space characters obscured
      */
     public static String obscureLine(String line, Random rand){
         String obscureLine = "";
