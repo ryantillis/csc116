@@ -76,11 +76,13 @@ public class MapChanger {
     public static char getMapAction(Scanner console) {
         while(true) {
             System.out.print("Enter O-bsure, U-ncover, or Q-uit: ");
-            char action = console.next().toLowerCase().charAt(0);
-            if(action == 'o' || action == 'u') {
-                return action;
-            } else if(action == 'q') {
+            String action = console.next().toLowerCase();
+            if(action.equals("o") || action.equals("u")) {
+                return action.charAt(0);
+            } else if(action.equals("q")) {
                 System.exit(1);
+            } else {
+                System.out.println("Invalid action.");
             }
         }
     }
@@ -97,11 +99,13 @@ public class MapChanger {
      */
     public static Scanner getInputScanner(Scanner console) {
         System.out.print("Enter input file: ");
-        File file = new File(console.next());
+        String filePath = console.next();
+        File file = new File("../" + filePath);
         while (!file.exists()) {
-            System.out.println(file + " (No such file or directory)");
+            System.out.println(filePath + " (No such file or directory)");
             System.out.print("Enter input file: ");
-            file = new File(console.next());
+            filePath = console.next();
+            file = new File("../" + filePath);
         }
         Scanner fileScanner = null;// null signifies NO object reference
                                 // while (result == null) {
@@ -131,7 +135,8 @@ public class MapChanger {
         
         while(outputPrintStream == null) {
             System.out.print("Enter output file name: ");
-            File file = new File(console.next());
+            String filePath = console.next();
+            File file = new File("../" + filePath);
             try {
                 if(!file.exists()) {
                     outputPrintStream = new PrintStream(file);
