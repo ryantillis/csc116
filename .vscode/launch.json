@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - FormatJavaProgram",
+            "request": "launch",
+            "mainClass": "FormatJavaProgram",
+            "projectName": "csc116_bba901f1"
+        }
+    ]
+}

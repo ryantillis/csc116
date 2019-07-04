@@ -1,42 +1,25 @@
 
 import java.util.*;
+import java.io.*;
+
 public class Scratch {
-
-    public static void main(String[] args) {
-
-        Scanner console = new Scanner(System.in);;
-        longestName(console, 5);
-        longestName(console, 7);
-        console.close();
-
+    public static void main(String[] args) throws FileNotFoundException {
+        Scanner in = new Scanner(new File("example.txt"));
+        printBox(in, 12);
     }
 
-    public static void longestName(Scanner console, int n){
-
-        String longestName = "";
-        boolean tie = false;
-        for(int i = 1; i <= n; i++) {
-            System.out.print("name #" + i + "? ");
-            String testName = console.nextLine().toLowerCase();
-            if(testName.length() > longestName.length()) {
-                longestName = testName.toUpperCase().substring(0, 1) + testName.substring(1);
-                tie = false;
-            }
-            else if(testName.length() == longestName.length()){tie = true;}
+    // Counts total lines and words in the input scanner.
+    public static void printBox(Scanner input, int longestLine) {
+        System.out.println("+-" + "-".repeat(longestLine) + "-+");
+        while(input.hasNextLine()) {
+               String line = input.nextLine();
+               //System.out.println("| " + line + " |");
+               System.out.print("| ");
+               System.out.printf("%-" + longestLine + "s", line);
+               System.out.print(" |\n");
         }
-
-    System.out.println(longestName + "'s name is longest");
-    if(tie){System.out.println("(There was a tie!");}
-
+        System.out.println("+-" + "-".repeat(longestLine) + "-+");
+       
     }
-
-
+        
 }
-
-
-//             if(hasNextInt){int number = console.nextInt;
-            //     }
-
-            // number = console.
-
-            // }
