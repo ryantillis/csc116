@@ -3,7 +3,11 @@ import org.junit.Test;
 
 import junit.framework.TestCase;
 
-//TODO: Javadoc
+/** RationalNumberTest
+ * JUnit tests for RationalNumber class
+ * 
+ * @author Thomas Tillis
+ */
 public class RationalNumberTest extends TestCase {
 
     private RationalNumber quarter;
