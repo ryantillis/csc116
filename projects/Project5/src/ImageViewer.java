@@ -1,14 +1,21 @@
-/** ImageViewer Program
- * 
- * @author Thomas Tillis
- */
 import java.io.*;
 import java.util.*;
 import java.awt.*;
 
+/** ImageViewer Program
+ * 
+ * @author Thomas Tillis
+ */
 public class ImageViewer {
+    /** ImageView class */
     /** Test file directory */
     private static final String TEST_FILE_DIRECTORY = "test-files";
+    /** Contrast factor */
+    private static final Float CONTRAST_FACTOR = (float) 2.03731223484;
+    /** RGB MAX */
+    private static final int RBG_MAX = 255;
+    /** Image padding */
+    private static final int PADDING = 20;
 
     /**
      * Starts the program
@@ -23,11 +30,10 @@ public class ImageViewer {
         } else {
             try {
                 images = getImageList(args[0]);
-              }
-              catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 System.exit(1);
-              }
+            }
         }
 
         Scanner console = new Scanner(System.in);
@@ -54,8 +60,8 @@ public class ImageViewer {
     //see the Implementation section for how to do this 
     /** getImageList
      * Creates an array of ImageInfo objects
-     * @param filename
-     * @return
+     * @param filename name of file
+     * @return ImageInfo array
      */
     public static ImageInfo[] getImageList(String filename) {
         /** Image Info file */
@@ -68,8 +74,8 @@ public class ImageViewer {
         int lines = 0;
 
         //Try catch to create scanners
-        try{
-            imageInfoFile = new File("../" + TEST_FILE_DIRECTORY + "/" + filename);
+        try {
+            imageInfoFile = new File(/**"../" + TEST_FILE_DIRECTORY + "/" + */ filename);
             fileScanner = new Scanner(imageInfoFile);
             lineNumberScanner = new Scanner(imageInfoFile);
         } catch (FileNotFoundException e) {
@@ -134,12 +140,14 @@ public class ImageViewer {
             System.out.println(choiceIndex + " - " + "Quit the program\n");
         
             System.out.print("Image: ");
-            try{
+            try {
                 imageChoice = console.nextInt();
-            } catch(InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 console.next();
             }
-                if(imageChoice > images.length + 1 || imageChoice <= 0) {System.out.println("Invalid image number");}
+            if(imageChoice > images.length + 1 || imageChoice <= 0) {
+                System.out.println("Invalid image number");
+            }
         }
 
         return imageChoice;
@@ -164,7 +172,7 @@ public class ImageViewer {
         int width = image.getWidth();
         int height = image.getHeight();
         String fileName = "../" + image.getFilename();
-        DrawingPanel imagePanel = new DrawingPanel(width + 20, height + 20);
+        DrawingPanel imagePanel = new DrawingPanel(width + PADDING, height + PADDING);
         Image imageToDraw = imagePanel.loadImage(fileName);
         Graphics g = imagePanel.getGraphics();
         g.drawImage(imageToDraw, 10, 10, imagePanel);
@@ -224,18 +232,17 @@ public class ImageViewer {
      * @param pixels 2D array of color objects
      */
     public static void convertToHighContrast(Color[][] pixels) {
-        float contrastFactor = (259 * (88 + 255)) / (255 * (259 - 88));
         for(int row = 0; row < pixels.length; row++) {
             for(int column = 0; column < pixels[0].length; column++) {
-                int r = (int) Math.round(contrastFactor * pixels[row][column].getRed());
-                int g = (int) Math.round(contrastFactor * pixels[row][column].getGreen());
-                int b = (int) Math.round(contrastFactor * pixels[row][column].getBlue());
+                int r = (int) Math.round(CONTRAST_FACTOR * pixels[row][column].getRed());
+                int g = (int) Math.round(CONTRAST_FACTOR * pixels[row][column].getGreen());
+                int b = (int) Math.round(CONTRAST_FACTOR * pixels[row][column].getBlue());
 
-                if(r > 255) {r = 255; }
-                if(g > 255) {g = 255; }
-                if(b > 255) {b = 255; }
+                if(r > RBG_MAX) {r = RBG_MAX; }
+                if(g > RBG_MAX) {g = RBG_MAX; }
+                if(b > RBG_MAX) {b = RBG_MAX; }
                 //update pixel array with negative
-                pixels[row][column] = new Color(r, g, b);
+                pixels[row][column] = new Color(0, RBG_MAX, RBG_MAX);
             }
         }
     }
@@ -250,9 +257,9 @@ public class ImageViewer {
     public static void convertToNegative(Color[][] pixels) {
         for(int row = 0; row < pixels.length; row++) {
             for(int column = 0; column < pixels[0].length; column++) {
-                int r = 255 - pixels[row][column].getRed();
-                int g = 255 - pixels[row][column].getGreen();
-                int b = 255 - pixels[row][column].getBlue();
+                int r = RBG_MAX - pixels[row][column].getRed();
+                int g = RBG_MAX - pixels[row][column].getGreen();
+                int b = RBG_MAX - pixels[row][column].getBlue();
 
                 //update pixel array with negative
                 pixels[row][column] = new Color(r, g, b);

@@ -5,9 +5,12 @@ import org.junit.Test;
 
 import junit.framework.TestCase;
 
-//TODO: Javadoc
+/** ImageViewTest
+ * @author Thomas Tillis
+ */
 public class ImageViewerTest extends TestCase {
 
+    /** testGetImageList */
     @Test
     public void testGetImageList() {
         // Create images array with room for 4 ImageInfo objects
