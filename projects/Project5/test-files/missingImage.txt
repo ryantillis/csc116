@@ -1,0 +1,4 @@
+images/wolf.gif 200 269 Mr. Wuf at NC State
+images/belltower.jpg 133 200 NC State Memorial Belltower
+images/daniels.jpeg 266 190 Daniels Hall - Home of CSC 116!
+images/talley.png 300 245 Talley Student Center
