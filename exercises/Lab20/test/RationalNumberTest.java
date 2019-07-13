@@ -1,22 +1,28 @@
 import org.junit.Before;
 import org.junit.Test;
-
 import junit.framework.TestCase;
-
 /** RationalNumberTest
  * JUnit tests for RationalNumber class
  * 
  * @author Thomas Tillis
  */
 public class RationalNumberTest extends TestCase {
+    /** RationalNumber test class */
 
+    /** 1/4 */
     private RationalNumber quarter;
+    /** -1/4 */
     private RationalNumber quarterNeg;
+    /** 2/8 */
     private RationalNumber twoOverEight;
+    /** 1/3 */
     private RationalNumber third;
+    /** 1/2 */
     private RationalNumber half;
+    /** 3/1 */
     private RationalNumber three;
 
+    /** Function setups */
     @Before
     public void setUp() {
         quarter = new RationalNumber(1, 4);
@@ -28,6 +34,7 @@ public class RationalNumberTest extends TestCase {
     }
 
     @Test
+    /** Test constructor */
     public void testConstructor() {
         RationalNumber def = new RationalNumber();
         assertEquals("Default consturctor getter", 0, def.getNumerator());
@@ -42,6 +49,7 @@ public class RationalNumberTest extends TestCase {
     }
 
     @Test
+    /** Test constructor */
     public void testGetters() {
 
         assertEquals("quarter getNumerator", 1, quarter.getNumerator());
@@ -64,6 +72,7 @@ public class RationalNumberTest extends TestCase {
     }
 
     @Test
+    /** Test constructor */
     public void testToString() {
         assertEquals("quarter toString", "1/4", quarter.toString());
         assertEquals("quarterNeg toString", "-1/4", quarterNeg.toString());
@@ -74,6 +83,7 @@ public class RationalNumberTest extends TestCase {
     }
 
     @Test
+    /** Test constructor */
     public void testAdd() {
         String desc = "quarter.add(twoOverEight)";
         RationalNumber exp = half;
@@ -119,6 +129,7 @@ public class RationalNumberTest extends TestCase {
     }
 
     @Test
+    /** Test constructor */
     public void testSubtract() {
 
         String desc = "quarter.subtract(twoOverEight)";
@@ -165,6 +176,7 @@ public class RationalNumberTest extends TestCase {
     }
 
     @Test
+    /** Test constructor */
     public void testMultiply() {
 
         String desc = "quarter.multiply(twoOverEight)";
@@ -211,6 +223,7 @@ public class RationalNumberTest extends TestCase {
     }
 
     @Test
+    /** Test constructor */
     public void testDivide() {
 
         String desc = "quarter.divide(twoOverEight)";
@@ -266,6 +279,7 @@ public class RationalNumberTest extends TestCase {
     }
 
     @Test
+    /** Test constructor */
     public void testEquals() {
         String desc = "quarter.equals(twoOverEight)";
         boolean actB = quarter.equals(twoOverEight);
