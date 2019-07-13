@@ -4,6 +4,7 @@
  */
 import java.io.*;
 import java.util.*;
+import java.awt.*;
 
 public class ImageViewer {
     /** Test file directory */
@@ -30,11 +31,13 @@ public class ImageViewer {
         }
 
         Scanner console = new Scanner(System.in);
-        int imageSelectionInteger = getImageNumber(console, images);
-        if(imageSelectionInteger == images.length + 1) { System.exit(1); }
-        System.out.println(imageSelectionInteger);
-        ImageInfo imageSelection = images[imageSelectionInteger - 1];
-        displayImage(console, imageSelection);
+        while(true){
+            int imageSelectionInteger = getImageNumber(console, images);
+            if(imageSelectionInteger == images.length + 1) { System.exit(1); }
+            System.out.println();
+            ImageInfo imageSelection = images[imageSelectionInteger - 1];
+            displayImage(console, imageSelection);
+        }
 
     }
 
@@ -160,43 +163,101 @@ public class ImageViewer {
     public static void displayImage(Scanner console, ImageInfo image) {
         int width = image.getWidth();
         int height = image.getHeight();
-        String fileName = image.getFilename();
-        DrawingPanel imagePanel = new DrawingPanel(width, height);
-        imagePanel.drawImage(fileName, width, height);
-        System.out.println("< " + fileName + " is displayed on a new DrawingPanel >");
+        String fileName = "../" + image.getFilename();
+        DrawingPanel imagePanel = new DrawingPanel(width + 20, height + 20);
+        Image imageToDraw = imagePanel.loadImage(fileName);
+        Graphics g = imagePanel.getGraphics();
+        g.drawImage(imageToDraw, 10, 10, imagePanel);
+        
+        /** 2D array of Color objects representing pixels */
+        Color[][] pixels = imagePanel.getPixels();
+
+        System.out.println("< " + fileName + " is displayed on a new DrawingPanel >\n");
+        System.out.println("Please enter an option below.");
+        System.out.println("G-rey scale");
+        System.out.println("H-igh contrast");
+        System.out.println("N-egative\n");
+
+        System.out.print("Option: ");
+        String alterationOption = console.next();
+        switch(alterationOption) {
+            case "G":
+                convertToGreyScale(pixels);
+                break;
+            case "H":
+                convertToHighContrast(pixels);
+                break;
+            case "N":
+                convertToNegative(pixels);
+                break;
+            default:
+                break;
+        }
+        imagePanel.setPixels(pixels);
     }
 
 
     // //The Color pixels in the array are converted to grey scale
     // //See the information above as to how this is done
-    // /** convertToGreyScale
-    //  * 
-    //  * @param pixels 2D array of color objects
-    //  */
-    // public static void convertToGreyScale(Color[][] pixels) {
-
-    // }
+    /** convertToGreyScale
+     * 
+     * @param pixels 2D array of color objects
+     */
+    public static void convertToGreyScale(Color[][] pixels) {
+        for(int row = 0; row < pixels.length; row++) {
+            for(int column = 0; column < pixels[0].length; column++) {
+                int r = pixels[row][column].getRed();
+                int g = pixels[row][column].getGreen();
+                int b = pixels[row][column].getBlue();
+                int grey = (r + b + g) / 3;
+                //update pixel array with negative
+                pixels[row][column] = new Color(grey, grey, grey);
+            }
+        }
+    }
 
 
     // //The Color pixels in the array are converted to high contrast
     // //See the information above as to how this is done
-    // /** convertToHighContrast
-    //  * 
-    //  * @param pixels 2D array of color objects
-    //  */
-    // public static void convertToHighContrast(Color[][] pixels) {
+    /** convertToHighContrast
+     * 
+     * @param pixels 2D array of color objects
+     */
+    public static void convertToHighContrast(Color[][] pixels) {
+        float contrastFactor = (259 * (88 + 255)) / (255 * (259 - 88));
+        for(int row = 0; row < pixels.length; row++) {
+            for(int column = 0; column < pixels[0].length; column++) {
+                int r = (int) Math.round(contrastFactor * pixels[row][column].getRed());
+                int g = (int) Math.round(contrastFactor * pixels[row][column].getGreen());
+                int b = (int) Math.round(contrastFactor * pixels[row][column].getBlue());
 
-    // }
+                if(r > 255) {r = 255; }
+                if(g > 255) {g = 255; }
+                if(b > 255) {b = 255; }
+                //update pixel array with negative
+                pixels[row][column] = new Color(r, g, b);
+            }
+        }
+    }
 
 
     // //The Color pixels in the array are negated
     // //See the information above as to how this is done
-    // /** convertToNegative
-    //  * 
-    //  * @param pixels 2D array of color objects
-    //  */
-    // public static void convertToNegative(Color[][] pixels) {
+    /** convertToNegative
+     * 
+     * @param pixels 2D array of color objects
+     */
+    public static void convertToNegative(Color[][] pixels) {
+        for(int row = 0; row < pixels.length; row++) {
+            for(int column = 0; column < pixels[0].length; column++) {
+                int r = 255 - pixels[row][column].getRed();
+                int g = 255 - pixels[row][column].getGreen();
+                int b = 255 - pixels[row][column].getBlue();
 
-    // }
+                //update pixel array with negative
+                pixels[row][column] = new Color(r, g, b);
+            }
+        }
+    }
 
 }

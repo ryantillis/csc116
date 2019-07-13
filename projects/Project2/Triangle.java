@@ -127,10 +127,10 @@ public class Triangle {
         /** Set color to user input*/
         g.setColor(color);
 
-        /** Startin x-coordinate */
-        int x1 = sideLength / 2;
-        //** Starting y-coordinate */
-        int y1 = (int) (sideLength * Math.sqrt(3) / 2);
+        // /** Startin x-coordinate */
+        // int x1 = sideLength / 2;
+        // //** Starting y-coordinate */
+        // int y1 = (int) (sideLength * Math.sqrt(3) / 2);
 
         //** Polygon object to form triangle */
         Polygon triangle = new Polygon();
