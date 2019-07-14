@@ -7,9 +7,9 @@ import java.awt.*;
  * @author Thomas Tillis
  */
 public class ImageViewer {
-    /** ImageView class */
+    /** ImageViewer class */
     /** Test file directory */
-    private static final String TEST_FILE_DIRECTORY = "test-files";
+    //private static final String TEST_FILE_DIRECTORY = "test-files";
     /** Contrast factor */
     private static final int CONTRAST_VALUE = 128;
     /** RGB MAX */
@@ -171,37 +171,44 @@ public class ImageViewer {
     public static void displayImage(Scanner console, ImageInfo image) {
         int width = image.getWidth();
         int height = image.getHeight();
-        String fileName = "../" + image.getFilename();
+        String fileName = /** "../" + */ image.getFilename();
         DrawingPanel imagePanel = new DrawingPanel(width + PADDING, height + PADDING);
-        Image imageToDraw = imagePanel.loadImage(fileName);
-        Graphics g = imagePanel.getGraphics();
-        g.drawImage(imageToDraw, 10, 10, imagePanel);
-        
-        /** 2D array of Color objects representing pixels */
-        Color[][] pixels = imagePanel.getPixels();
-
-        System.out.println("< " + fileName + " is displayed on a new DrawingPanel >\n");
-        System.out.println("Please enter an option below.");
-        System.out.println("G-rey scale");
-        System.out.println("H-igh contrast");
-        System.out.println("N-egative\n");
-
-        System.out.print("Option: ");
-        String alterationOption = console.next();
-        switch(alterationOption) {
-            case "G":
-                convertToGreyScale(pixels);
-                break;
-            case "H":
-                convertToHighContrast(pixels);
-                break;
-            case "N":
-                convertToNegative(pixels);
-                break;
-            default:
-                break;
+        try {
+            Image imageToDraw = imagePanel.loadImage(fileName);
+            Graphics g = imagePanel.getGraphics();
+            g.drawImage(imageToDraw, 10, 10, imagePanel);
+            
+            /** 2D array of Color objects representing pixels */
+            Color[][] pixels = imagePanel.getPixels();
+    
+            System.out.println("< " + fileName + " is displayed on a new DrawingPanel >\n");
+            System.out.println("Please enter an option below.");
+            System.out.println("G-rey scale");
+            System.out.println("H-igh contrast");
+            System.out.println("N-egative\n");
+    
+            System.out.print("Option: ");
+            String alterationOption = console.next().toUpperCase();
+            switch(alterationOption) {
+                case "G":
+                    convertToGreyScale(pixels);
+                    break;
+                case "H":
+                    convertToHighContrast(pixels);
+                    break;
+                case "N":
+                    convertToNegative(pixels);
+                    break;
+                default:
+                    System.out.println("Invalid option");
+                    break;
+            }
+            imagePanel.setPixels(pixels);
+        } catch (RuntimeException e) {
+            System.out.println(image.getTitle() + " missing image file: "
+                 + image.getFilename());
         }
-        imagePanel.setPixels(pixels);
+
     }
 
 
@@ -238,9 +245,12 @@ public class ImageViewer {
                 int g = pixels[row][column].getGreen();
                 int b = pixels[row][column].getBlue();
 
-                if(r < CONTRAST_VALUE) {r = 0; } else { r = RBG_MAX; }
-                if(g < CONTRAST_VALUE) {g = 0; } else { g = RBG_MAX; }
-                if(b < CONTRAST_VALUE) {b = 0; } else { b = RBG_MAX; }
+                if(r < CONTRAST_VALUE) {r = 0; } 
+                else { r = RBG_MAX; }
+                if(g < CONTRAST_VALUE) {g = 0; } 
+                else { g = RBG_MAX; }
+                if(b < CONTRAST_VALUE) {b = 0; } 
+                else { b = RBG_MAX; }
                 //update pixel array with negative
                 pixels[row][column] = new Color(r, g, b);
             }
