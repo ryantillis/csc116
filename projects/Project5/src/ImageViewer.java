@@ -11,7 +11,7 @@ public class ImageViewer {
     /** Test file directory */
     private static final String TEST_FILE_DIRECTORY = "test-files";
     /** Contrast factor */
-    private static final Float CONTRAST_FACTOR = (float) 2.03731223484;
+    private static final int CONTRAST_VALUE = 128;
     /** RGB MAX */
     private static final int RBG_MAX = 255;
     /** Image padding */
@@ -234,15 +234,15 @@ public class ImageViewer {
     public static void convertToHighContrast(Color[][] pixels) {
         for(int row = 0; row < pixels.length; row++) {
             for(int column = 0; column < pixels[0].length; column++) {
-                int r = (int) Math.round(CONTRAST_FACTOR * pixels[row][column].getRed());
-                int g = (int) Math.round(CONTRAST_FACTOR * pixels[row][column].getGreen());
-                int b = (int) Math.round(CONTRAST_FACTOR * pixels[row][column].getBlue());
+                int r = pixels[row][column].getRed();
+                int g = pixels[row][column].getGreen();
+                int b = pixels[row][column].getBlue();
 
-                if(r > RBG_MAX) {r = RBG_MAX; }
-                if(g > RBG_MAX) {g = RBG_MAX; }
-                if(b > RBG_MAX) {b = RBG_MAX; }
+                if(r < CONTRAST_VALUE) {r = 0; } else { r = RBG_MAX; }
+                if(g < CONTRAST_VALUE) {g = 0; } else { g = RBG_MAX; }
+                if(b < CONTRAST_VALUE) {b = 0; } else { b = RBG_MAX; }
                 //update pixel array with negative
-                pixels[row][column] = new Color(0, RBG_MAX, RBG_MAX);
+                pixels[row][column] = new Color(r, g, b);
             }
         }
     }

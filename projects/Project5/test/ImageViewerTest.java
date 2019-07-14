@@ -25,9 +25,21 @@ public class ImageViewerTest extends TestCase {
         String description = "ImageViewer.getImageList(\"test-files/misc.txt\")";
         ImageInfo[] actual = ImageViewer.getImageList("test-files/misc.txt");
         assertTrue(description, Arrays.equals(expected, actual));
-    }
 
-    // TODO Add 1 additional valid test for the getImageList() method here
+        // Create images array with room for 4 ImageInfo objects
+        ImageInfo[] expected2 = new ImageInfo[3];
+
+        // Create and add 4 ImageInfo objects to the images array
+        expected2[0] = new ImageInfo("images/wolf.gif", 200, 269, "Mr. Wuf at NC State");
+        expected2[1] = new ImageInfo("images/belltower.jpg", 133, 200, 
+            "NC State Memorial Belltower");
+        expected2[2] = new ImageInfo("images/daniels.jpeg", 266, 190, 
+            "Daniels Hall - Home of CSC 116!");
+
+        description = "ImageViewer.getImageList(\"test-files/ncstate.txt\")";
+        ImageInfo[] actual2 = ImageViewer.getImageList("test-files/ncstate.txt");
+        assertTrue(description, Arrays.equals(expected2, actual2));
+    }
 
     @Test
     public void testGetImageListInvalid() {
@@ -44,47 +56,110 @@ public class ImageViewerTest extends TestCase {
     public void testConvertToGreyScale() {
         // Create 2D Color array
         Color[][] pixels = { { new Color(0, 0, 200), new Color(0, 0, 200) },
-                { new Color(0, 0, 200), new Color(0, 0, 200) } };
+            { new Color(0, 0, 200), new Color(0, 0, 200) } };
 
         Color[][] expected = { { new Color(66, 66, 66), new Color(66, 66, 66) },
-                { new Color(66, 66, 66), new Color(66, 66, 66) } };
+            { new Color(66, 66, 66), new Color(66, 66, 66) } };
 
         String description = "convertToGreyScale with 2x2 Array of Color (0, 0, 200)";
         ImageViewer.convertToGreyScale(pixels);
         assertTrue(description, Arrays.deepEquals(expected, pixels));
+
+        // Create 2D Color array
+        Color[][] pixels2 = { { new Color(100, 100, 100), new Color(100, 100, 100) },
+            { new Color(100, 100, 100), new Color(100, 100, 100) } };
+
+        Color[][] expected2 = { { new Color(100, 100, 100), new Color(100, 100, 100) },
+            { new Color(100, 100, 100), new Color(100, 100, 100) } };
+
+        String description2 = "convertToGreyScale with 2x2 Array of Color (100, 100, 100)";
+        ImageViewer.convertToGreyScale(pixels2);
+        assertTrue(description2, Arrays.deepEquals(expected2, pixels2));
+
+        // Create 2D Color array
+        Color[][] pixels3 = { { new Color(0, 66, 0), new Color(0, 66, 0) },
+            { new Color(0, 66, 0), new Color(0, 66, 0) } };
+
+        Color[][] expected3 = { { new Color(22, 22, 22), new Color(22, 22, 22) },
+            { new Color(22, 22, 22), new Color(22, 22, 22) } };
+
+        String description3 = "convertToGreyScale with 2x2 Array of Color (0, 66, 0)";
+        ImageViewer.convertToGreyScale(pixels3);
+        assertTrue(description3, Arrays.deepEquals(expected3, pixels3));
     }
 
-    // TODO Add 2 additional valid tests for the convertToGreyScale() method here
     @Test
     public static void testConvertToHighContrast() {
 
         // Create 2D Color array
         Color[][] pixels = { { new Color(127, 128, 200), new Color(127, 128, 200) },
-                { new Color(127, 128, 200), new Color(127, 128, 200) } };
+            { new Color(127, 128, 200), new Color(127, 128, 200) } };
 
         Color[][] expected = { { new Color(0, 255, 255), new Color(0, 255, 255) },
-                { new Color(0, 255, 255), new Color(0, 255, 255) } };
+            { new Color(0, 255, 255), new Color(0, 255, 255) } };
 
         String description = "convertToHighContrast with 2x2 Array of Color (127, 128, 200)";
         ImageViewer.convertToHighContrast(pixels);
         assertTrue(description, Arrays.deepEquals(expected, pixels));
-    }
 
-    // TODO Add 2 additional valid tests for the convertToHighContrast() method here
+        // Create 2D Color array
+        Color[][] pixels2 = { { new Color(255, 187, 2), new Color(255, 187, 2) },
+            { new Color(255, 187, 2), new Color(255, 187, 2) } };
+
+        Color[][] expected2 = { { new Color(255, 255, 0), new Color(255, 255, 0) },
+            { new Color(255, 255, 0), new Color(255, 255, 0) } };
+
+        String description2 = "convertToHighContrast with 2x2 Array of Color (255, 187, 2)";
+        ImageViewer.convertToHighContrast(pixels2);
+        assertTrue(description2, Arrays.deepEquals(expected2, pixels2));
+
+        // Create 2D Color array
+        Color[][] pixels3 = { { new Color(10, 128, 255), new Color(10, 128, 255) },
+            { new Color(10, 128, 255), new Color(10, 128, 255) } };
+
+        Color[][] expected3 = { { new Color(0, 255, 255), new Color(0, 255, 255) },
+            { new Color(0, 255, 255), new Color(0, 255, 255) } };
+
+        String description3 = "convertToHighContrast with 2x2 Array of Color (127, 128, 200)";
+        ImageViewer.convertToHighContrast(pixels3);
+        assertTrue(description3, Arrays.deepEquals(expected3, pixels3));
+    }
 
     @Test
     public static void testConvertToNegative() {
 
         // Create 2D Color array
         Color[][] pixels = { { new Color(0, 100, 255), new Color(0, 100, 255) },
-                { new Color(0, 100, 255), new Color(0, 100, 255) } };
+            { new Color(0, 100, 255), new Color(0, 100, 255) } };
 
         Color[][] expected = { { new Color(255, 155, 0), new Color(255, 155, 0) },
-                { new Color(255, 155, 0), new Color(255, 155, 0) } };
+            { new Color(255, 155, 0), new Color(255, 155, 0) } };
 
         String description = "convertToNegative with 2x2 Array of Color (0, 100, 255)";
         ImageViewer.convertToNegative(pixels);
         assertTrue(description, Arrays.deepEquals(expected, pixels));
+
+        // Create 2D Color array
+        Color[][] pixels2 = { { new Color(0, 150, 255), new Color(0, 150, 255) },
+            { new Color(0, 150, 255), new Color(0, 150, 255) } };
+
+        Color[][] expected2 = { { new Color(255, 105, 0), new Color(255, 105, 0) },
+            { new Color(255, 105, 0), new Color(255, 105, 0) } };
+
+        String description2 = "convertToNegative with 2x2 Array of Color (0, 150, 255)";
+        ImageViewer.convertToNegative(pixels2);
+        assertTrue(description2, Arrays.deepEquals(expected2, pixels2));
+
+        // Create 2D Color array
+        Color[][] pixels3 = { { new Color(200, 50, 255), new Color(200, 50, 255) },
+            { new Color(200, 50, 255), new Color(200, 50, 255) } };
+
+        Color[][] expected3 = { { new Color(55, 205, 0), new Color(55, 205, 0) },
+            { new Color(55, 205, 0), new Color(55, 205, 0) } };
+
+        String description3 = "convertToNegative with 2x2 Array of Color (200, 50, 255)";
+        ImageViewer.convertToNegative(pixels3);
+        assertTrue(description3, Arrays.deepEquals(expected3, pixels3));
     }
-    // TODO Add 2 additional valid tests for the convertToNegative() method here
+
 }
