@@ -1,4 +1,5 @@
-import javax.swing.Box;
+//import javax.swing.Box;
+import java.util.Random;
 
 /** BoxList Class
  * Represents a list of boxes in Let's Make a Deal game
