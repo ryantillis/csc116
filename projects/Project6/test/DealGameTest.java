@@ -7,7 +7,11 @@ import org.junit.Test;
 
 import junit.framework.TestCase;
 
-// TODO JAVADOC!
+/**
+ * DealGameTest.java
+ * 
+ * @author Thomas Tillis
+ */
 public class DealGameTest extends TestCase {
     /** Delta for double tests */
     private static final double DELTA = 0.01;

@@ -106,7 +106,7 @@ public class DealGame {
             playerBoxIndex = index;
             hasPlayerChosenBox = true;
         } else {
-            boxList[index].open();
+            boxList.open(index);
             boxesOpenedThisRound++;
             boxesOpenedTotal++;
         }
@@ -119,10 +119,10 @@ public class DealGame {
      * 
      * @return int count of boxes remaining
      */
-    public int getBoxesRemainingToOpenthisRound(){
+    public int getBoxesRemainingToOpenThisRound(){
         int count = 0;
-        for(Box element : boxList){
-            if(!element.isOpen()) {
+        for(int i = 0; i < BOXES_IN_ROUND.length; i++) {
+            if(boxList.isOpen(i)) {
                 count++;
             }
         }
@@ -165,8 +165,8 @@ public class DealGame {
      * @return
      */
     public boolean isEndOfRound() {
-        for(Box element : boxList) {
-            if(!element.isOpen()) {
+        for(int i = 0; i < BOXES_IN_ROUND.length; i++) {
+            if(!boxList.isOpen(i)) {
                 return false;
             }
         }
@@ -180,7 +180,7 @@ public class DealGame {
      * @return double player's box value
      */
     public double getPlayerBoxValue() {
-        return boxList[playerBoxIndex].getValue();
+        return boxList.getValue(playerBoxIndex);
     }
 
     /**
@@ -192,7 +192,7 @@ public class DealGame {
      * @return true if open, false otherwise
      */
     public boolean isBoxOpen(int index) {
-        return boxList[index].isOpen();
+        return boxList.isOpen(index);
     }
 
     /**
@@ -203,7 +203,7 @@ public class DealGame {
      * @return double value of box at index
      */
     public double getValueInBox(int index) {
-        return boxList[index].getValue();
+        return boxList.getValue(index);
     }
 
     /**

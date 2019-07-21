@@ -9,6 +9,8 @@ import java.util.Random;
 public class BoxList {
     /** Array of Box objects */
     private Box[] boxes;
+    /** Seed value for random numbers */
+    private long seed = 0;
 
     /**
      * BoxList
@@ -59,8 +61,8 @@ public class BoxList {
      * @return double Average value of unopened boxes
      */
     public double averageValueOfUnopenedBoxes() {
-        int count = 0;
-        int sum = 0;
+        double count = 0;
+        double sum = 0;
         for(Box element : boxes){
             if(!element.isOpen()) {
                 count++;
@@ -83,9 +85,12 @@ public class BoxList {
     public void shuffle(int numberOfSwaps){
         for(int i = 0; i < numberOfSwaps; i++) {
             Random rand = new Random();
+            rand.setSeed(10);
             int swap1 = rand.nextInt(boxes.length);
+            System.out.println(swap1);
             Box swap1Box = boxes[swap1];
             int swap2 = rand.nextInt(boxes.length);
+            System.out.println(swap2);
             boxes[swap1] = boxes[swap2];
             boxes[swap2] = swap1Box;
         }
@@ -105,5 +110,14 @@ public class BoxList {
             boxArrayString += element.toString() + "\n";
         }
         return boxArrayString;
+    }
+
+    /**
+     * setSeed(long seed)
+     * Set seed for shuffle method
+     * @param seed long value to set random seed
+     */
+    public void setSeed(long seed){
+        this.seed = seed;
     }
 }

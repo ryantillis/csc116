@@ -52,6 +52,6 @@ public class Box {
      * @return String
      */
     public String toString() {
-        return "Open: " + isOpen + " Value: " + value;
+        return "Open: " + this.isOpen() + " Value: " + this.getValue();
     }
 }
