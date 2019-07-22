@@ -48,7 +48,7 @@ public class BoxListTest extends TestCase {
     @Before
     public void setUp() {
         testBoxList = new BoxList(BOX_VALUES);
-        testBoxList.setSeed(100);
+        testBoxList.setSeed(10);
     }
 
     /** Test getValue() method */
@@ -106,6 +106,7 @@ public class BoxListTest extends TestCase {
             exp = 10000.0;
             assertEquals("Test BoxList Class shuffle() method", exp, act, DELTA);
         }
+        
         /** Test averageValueOfUnopenedBoxes() method */
         @Test
         public void testAverageValueOfUnopenedBoxes() {

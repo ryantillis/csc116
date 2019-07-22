@@ -83,13 +83,15 @@ public class BoxList {
      * @param numberOfSwaps Number of times to swap
      */
     public void shuffle(int numberOfSwaps){
+        int swap1 = 0;
+        int swap2 = 0;
+        Random rand = new Random();
+        rand.setSeed(seed);
         for(int i = 0; i < numberOfSwaps; i++) {
-            Random rand = new Random();
-            rand.setSeed(10);
-            int swap1 = rand.nextInt(boxes.length);
+            swap1 = rand.nextInt(boxes.length);
             System.out.println(swap1);
             Box swap1Box = boxes[swap1];
-            int swap2 = rand.nextInt(boxes.length);
+            swap2 = rand.nextInt(boxes.length);
             System.out.println(swap2);
             boxes[swap1] = boxes[swap2];
             boxes[swap2] = swap1Box;

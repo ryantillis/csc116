@@ -67,8 +67,10 @@ public class DealGameTest extends TestCase {
         // Move to next round
         game.startNextRound();
 
-        // TODO write test case here - you may want to test how
-        // many boxes a player can open in the second round
+        //Tests how many boxes a player can open in the second round
+        act = game.getBoxesRemainingToOpenThisRound();
+        exp = 5;
+        assertEquals("Second round boxes available", exp, act);
     }
 
     @Test
@@ -79,9 +81,15 @@ public class DealGameTest extends TestCase {
         int act = game.getBoxesOpenedThisRound();
         assertEquals(id, exp, act);
 
-        // TODO write test case here - you may want to test
-        // that the number of boxes opened in the round is
+        // Tests that the number of boxes opened in the round is
         // increased when the player selects his/her box and another box.
+        game.selectBox(1);
+        game.selectBox(2);
+        id = "No Boxes open at start of game";
+        exp = 1;
+        act = game.getBoxesOpenedThisRound();
+        assertEquals(id, exp, act);
+
     }
 
     @Test
@@ -93,9 +101,13 @@ public class DealGameTest extends TestCase {
         double act = game.getPlayerBoxValue();
         assertEquals(id, exp, act);
 
-        // TODO write test case here - you may want to test
-        // that the player's box value changes to something
+        // Tests that the player's box value changes to something
         // else when the player selects a box.
+        game.selectBox(1);
+        id = "Player box value before selecting box";
+        exp = 1.0;
+        act = game.getPlayerBoxValue();
+        assertEquals(id, exp, act);
     }
 
     @Test
@@ -109,12 +121,15 @@ public class DealGameTest extends TestCase {
             assertFalse(id + desc + i, game.isBoxOpen(i));
         }
 
-        // TODO write test case here
-        // Test that if a certain box is opened, that the game
+        // Tests that if a certain box is opened, that the game
         // knows it is open. A for loop is NOT the best test
         // here because you want to ensure the specific box you
         // open (via selectBox) is the one that is open.
-
+        game.selectBox(2);
+        game.selectBox(1);
+        boolean exp = true;
+        boolean act = game.isBoxOpen(1);
+        assertEquals("Test opened box", exp, act);
     }
 
     @Test
@@ -130,13 +145,19 @@ public class DealGameTest extends TestCase {
         double act = game.getCurrentOffer();
         assertEquals(id, exp, act, DELTA);
 
-        // TODO write test case here
-        // Test that if the Player's box and the first box
+        // Tests that if the Player's box and the first box
         // is selected, that the current offer changes. You'll
         // want to calculate the expected value by hand before you
         // run the test case (you should figure out the expected
         // values BEFORE running your tests - your code may not
         // be right).
+        game.selectBox(1);
+        game.selectBox(2);
+        id = "Initial current offer";
+        exp = 13673.64;
+        act = game.getCurrentOffer();
+        assertEquals(id, exp, act, DELTA);
+
     }
 
     @Test
@@ -148,10 +169,14 @@ public class DealGameTest extends TestCase {
         double act = game.getHighScore();
         assertEquals(id, exp, act, DELTA);
 
-        // TODO write test case here
-        // Test that a new high score is saved by setting
+        // Tests that a new high score is saved by setting
         // a new high score and then checking that the value
         // is saved.
+        game.setHighScore(10.0);
+        exp = 10.0;
+        game.setHighScore(10.0);
+        act = game.getHighScore();
+        assertEquals("10.0 high score", exp, act, DELTA);
     }
 
     @Test
@@ -162,7 +187,11 @@ public class DealGameTest extends TestCase {
         double act = game.getValueInBox(0);
         assertEquals(id, exp, act, DELTA);
 
-        // TODO write test case here
+        // Test value in box 25
+        id = "Value in box 25";
+        exp = 1000000;
+        act = game.getValueInBox(25);
+        assertEquals(id, exp, act, DELTA);
     }
 
     @Test
@@ -176,9 +205,17 @@ public class DealGameTest extends TestCase {
         double act = game.getHighScore();
         assertEquals(id, exp, act, DELTA);
 
-        // TODO write test case here
-        // Test either that a new, higher, score is set, or
+        // Tests either that a new, higher, score is set, or
         // that a lower score is NOT set. The best idea,
         // would be to test both paths.
+        assertFalse(id, game.isNewHighScore(5.0));
+        exp = 10.0;
+        act = game.getHighScore();
+        assertEquals(id, exp, act, DELTA);
+
+        assertTrue(id, game.isNewHighScore(25.0));
+        exp = 25.0;
+        act = game.getHighScore();
+        assertEquals(id, exp, act, DELTA);
     }
 }

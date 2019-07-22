@@ -15,6 +15,6 @@ public class Scratch {
 
         BoxList testBoxList = new BoxList(BOX_VALUES);
         System.out.println(testBoxList.toString());
-        testBoxList.shuffle(1);
+        testBoxList.shuffle(10);
     }
 }

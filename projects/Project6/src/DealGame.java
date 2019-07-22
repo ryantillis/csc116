@@ -1,6 +1,7 @@
 import java.io.File;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
+import java.io.PrintStream;
 
 /** DealGame Class
  * Manages let's make a deal gameplay
@@ -39,46 +40,51 @@ public class DealGame {
     private BoxList boxList;
 
     /** Integer which stores the index of the player's box in the BoxList */
-    private int playerBoxIndex = -1;
+    private int playerBoxIndex;
 
     /** A boolean variable that knows whether or not the player has chosen a box */
-    private boolean hasPlayerChosenBox = false;
+    private boolean hasPlayerChosenBox;
 
     /**An integer that stores the current round number */
-    private int round = 0;
+    private int round;
 
     /** An integer that keeps track of the number of boxes opened this round */
-    private int boxesOpenedThisRound = 0;
+    private int boxesOpenedThisRound;
 
     /** An integer that keeps track of the total number of boxes opened this game */
-    private int boxesOpenedTotal = 0;
+    private int boxesOpenedTotal;
 
     /** A double that stores the highest score over all plays of the game */
-    private double highScore = 0;
+    private double highScore;
 
     public DealGame(boolean testing) {
-        File highScorefile;
+        //Intialize BoxList object with given values
+        this.boxList = new BoxList(BOX_VALUES);
+
+        File highScorefile = new File(HIGH_SCORE_FILE);
         Scanner highScoreFileScanner;
-        BoxList boxList = new BoxList(BOX_VALUES);
+        
+        //Initial Shuffle
         if(testing == false) {
             boxList.shuffle(BOX_SWAPS);
         }
-
-        try {
-            highScorefile = new File("../" + HIGH_SCORE_FILE);
-            highScoreFileScanner = new Scanner(highScorefile);
-
-            if(highScorefile.exists()){
+        //Check for high score file and read if it exists
+        if(highScorefile.exists()){
+            try {
+                highScoreFileScanner = new Scanner(highScorefile);
                 this.highScore = highScoreFileScanner.nextDouble();
-            } else {
-                this.highScore = 0;
+            } catch (FileNotFoundException e) {
+                //System.out.println("No High Score File. ");
             }
-
-        } catch (FileNotFoundException e) {
-            System.out.println("No High Score File. ");
+        } else {
+            this.highScore = 0;
         }
 
         this.round = 1;
+        this.boxesOpenedThisRound = 0;
+        this.boxesOpenedTotal = 0;
+        this.playerBoxIndex = 0;
+        this.hasPlayerChosenBox = false;
 
     }
 
@@ -104,7 +110,7 @@ public class DealGame {
     public void selectBox(int index) {
         if(!this.hasPlayerChosenBox) {
             playerBoxIndex = index;
-            hasPlayerChosenBox = true;
+            this.hasPlayerChosenBox = true;
         } else {
             boxList.open(index);
             boxesOpenedThisRound++;
@@ -120,13 +126,9 @@ public class DealGame {
      * @return int count of boxes remaining
      */
     public int getBoxesRemainingToOpenThisRound(){
-        int count = 0;
-        for(int i = 0; i < BOXES_IN_ROUND.length; i++) {
-            if(boxList.isOpen(i)) {
-                count++;
-            }
-        }
-        return count;
+        int startingBoxes = BOXES_IN_ROUND[round];
+        int boxesLeft = startingBoxes - boxesOpenedThisRound;
+        return boxesLeft;
     }
 
     /**
@@ -155,6 +157,7 @@ public class DealGame {
      */
     public void startNextRound() {
         this.round++;
+        this.boxesOpenedThisRound = 0;
     }
 
     /**
@@ -165,12 +168,10 @@ public class DealGame {
      * @return
      */
     public boolean isEndOfRound() {
-        for(int i = 0; i < BOXES_IN_ROUND.length; i++) {
-            if(!boxList.isOpen(i)) {
-                return false;
-            }
+        if(boxesOpenedThisRound == this.getBoxesRemainingToOpenThisRound()) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     /**
@@ -226,6 +227,15 @@ public class DealGame {
     public double getHighScore() {
         return highScore;
     }
+
+    /**
+     * setHighScore()
+     * Set high score value of all games
+     * @param value high score value
+     */
+    public void setHighScore(double value) {
+        this.highScore = value;
+    }
     
     /**
      * isNewHighScore(double value)
@@ -237,6 +247,15 @@ public class DealGame {
      */
     public boolean isNewHighScore(double value) {
         if(value > highScore) {
+            try{
+                PrintStream out = new PrintStream(new File(HIGH_SCORE_FILE));
+                out.print(value);
+                out.close();
+            } catch(FileNotFoundException e) {
+                System.out.println("Failed to write new high score.");
+                System.out.println(e.getMessage());
+            }
+            this.highScore = value;
             return true;
         } else {
             return false;
