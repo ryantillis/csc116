@@ -9,6 +9,7 @@ import java.io.PrintStream;
  * @author Thomas Tillis
  */
 public class DealGame {
+    /** Deal game class */
   
     /** Number of boxes in the game */
     public static final int NUM_BOXES = 26;
@@ -57,6 +58,9 @@ public class DealGame {
     /** A double that stores the highest score over all plays of the game */
     private double highScore;
 
+    /** DealGame constructor
+     * @param testing boolean if test
+     */
     public DealGame(boolean testing) {
         //Intialize BoxList object with given values
         this.boxList = new BoxList(BOX_VALUES);
@@ -105,16 +109,16 @@ public class DealGame {
      * box and incremements counts if box
      * already chosen
      * 
-     * @param index
+     * @param index Given index
      */
     public void selectBox(int index) {
         if(!this.hasPlayerChosenBox) {
-            playerBoxIndex = index;
+            this.playerBoxIndex = index;
             this.hasPlayerChosenBox = true;
         } else {
             boxList.open(index);
-            boxesOpenedThisRound++;
-            boxesOpenedTotal++;
+            this.boxesOpenedThisRound += 1;
+            this.boxesOpenedTotal += 1;
         }
     }
 
@@ -126,8 +130,8 @@ public class DealGame {
      * @return int count of boxes remaining
      */
     public int getBoxesRemainingToOpenThisRound(){
-        int startingBoxes = BOXES_IN_ROUND[round];
-        int boxesLeft = startingBoxes - boxesOpenedThisRound;
+        int startingBoxes = BOXES_IN_ROUND[this.getRound()];
+        int boxesLeft = startingBoxes - this.getBoxesOpenedThisRound();
         return boxesLeft;
     }
 
@@ -156,7 +160,7 @@ public class DealGame {
      * Increments the round number
      */
     public void startNextRound() {
-        this.round++;
+        this.round += 1;
         this.boxesOpenedThisRound = 0;
     }
 
@@ -165,10 +169,10 @@ public class DealGame {
      * Returns true if all boxes for the current round have been
      * opened, false otherwise
      * 
-     * @return
+     * @return boolean is end of round 
      */
     public boolean isEndOfRound() {
-        if(boxesOpenedThisRound == this.getBoxesRemainingToOpenThisRound()) {
+        if((BOXES_IN_ROUND[this.getRound()] - this.getBoxesOpenedThisRound()) <= 0) {
             return true;
         }
         return false;
@@ -247,11 +251,11 @@ public class DealGame {
      */
     public boolean isNewHighScore(double value) {
         if(value > highScore) {
-            try{
+            try {
                 PrintStream out = new PrintStream(new File(HIGH_SCORE_FILE));
                 out.print(value);
                 out.close();
-            } catch(FileNotFoundException e) {
+            } catch (FileNotFoundException e) {
                 System.out.println("Failed to write new high score.");
                 System.out.println(e.getMessage());
             }

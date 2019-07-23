@@ -131,7 +131,7 @@ public class RationalNumberGUI extends JFrame implements ActionListener {
             } catch (IllegalArgumentException iae) {
                 JOptionPane.showMessageDialog(null,
                                 "Denominator of zero in given number or result of operation.");
-            };
+            }
         }
         if (e.getSource() == multiplyButton) {
             try {

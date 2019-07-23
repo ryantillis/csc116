@@ -1,11 +1,6 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import jdk.jfr.Timestamp;
 import junit.framework.TestCase;
 
 /**
@@ -67,61 +62,61 @@ public class BoxListTest extends TestCase {
         assertEquals("Test BoxList Class getValue(BoxList.length - 1)) Method", exp, act, DELTA);
     }
 
-        /** Test isOpen() method */
-        @Test
-        public void testIsOpen() {
-            boolean act = testBoxList.isOpen(0);
-            boolean exp = false;
-            assertEquals("Test BoxList Class isOpen(0) Method: unopened", exp, act);
+    /** Test isOpen() method */
+    @Test
+    public void testIsOpen() {
+        boolean act = testBoxList.isOpen(0);
+        boolean exp = false;
+        assertEquals("Test BoxList Class isOpen(0) Method: unopened", exp, act);
 
-            testBoxList.open(0);
-            act = testBoxList.isOpen(0);
-            exp = true;
-            assertEquals("Test BoxList Class isOpen(0) Method: opened", exp, act);
-        }
+        testBoxList.open(0);
+        act = testBoxList.isOpen(0);
+        exp = true;
+        assertEquals("Test BoxList Class isOpen(0) Method: opened", exp, act);
+    }
 
 
-        /** Test open() method */
-        @Test
-        public void testOpen() {
-            boolean act = testBoxList.isOpen(0);
-            boolean exp = false;
-            assertEquals("Test BoxList Class isOpen(0) Method: unopened", exp, act);
+    /** Test open() method */
+    @Test
+    public void testOpen() {
+        boolean act = testBoxList.isOpen(0);
+        boolean exp = false;
+        assertEquals("Test BoxList Class isOpen(0) Method: unopened", exp, act);
 
-            testBoxList.open(0);
-            act = testBoxList.isOpen(0);
-            exp = true;
-            assertEquals("Test BoxList Class isOpen(0) Method: opened", exp, act);
-        }
+        testBoxList.open(0);
+        act = testBoxList.isOpen(0);
+        exp = true;
+        assertEquals("Test BoxList Class isOpen(0) Method: opened", exp, act);
+    }
 
-        /** Test shuffle() method */
-        @Test
-        public void testShuffle() {
-            testBoxList.shuffle(1);
-            double act = testBoxList.getValue(15);
-            double exp = 75.0;
-            assertEquals("Test BoxList Class shuffle() method", exp, act, DELTA);
+    /** Test shuffle() method */
+    @Test
+    public void testShuffle() {
+        testBoxList.shuffle(1);
+        double act = testBoxList.getValue(15);
+        double exp = 75.0;
+        assertEquals("Test BoxList Class shuffle() method", exp, act, DELTA);
 
-            act = testBoxList.getValue(6);
-            exp = 10000.0;
-            assertEquals("Test BoxList Class shuffle() method", exp, act, DELTA);
-        }
+        act = testBoxList.getValue(6);
+        exp = 10000.0;
+        assertEquals("Test BoxList Class shuffle() method", exp, act, DELTA);
+    }
         
-        /** Test averageValueOfUnopenedBoxes() method */
-        @Test
-        public void testAverageValueOfUnopenedBoxes() {
-            double act = testBoxList.averageValueOfUnopenedBoxes();
-            double exp = 131477.5388;
-            assertEquals("Test BoxList Class averageValueOfUnopenedBoxes() Method", exp, act, DELTA);
-        }
+    /** Test averageValueOfUnopenedBoxes() method */
+    @Test
+    public void testAverageValueOfUnopenedBoxes() {
+        double act = testBoxList.averageValueOfUnopenedBoxes();
+        double exp = 131477.5388;
+        assertEquals("Test BoxList Class averageValueOfUnopenedBoxes() Method", exp, act, DELTA);
+    }
 
 
 
-        /** Test toString() method */
-        @Test
-        public void testToString() {
-            String act = testBoxList.toString();
-            String exp = "Open: false Value: 0.01\n" +
+    /** Test toString() method */
+    @Test
+    public void testToString() {
+        String act = testBoxList.toString();
+        String exp = "Open: false Value: 0.01\n" +
             "Open: false Value: 1.0\n" +
             "Open: false Value: 5.0\n" +
             "Open: false Value: 10.0\n" +
@@ -147,7 +142,7 @@ public class BoxListTest extends TestCase {
             "Open: false Value: 500000.0\n" +
             "Open: false Value: 750000.0\n" +
             "Open: false Value: 1000000.0\n";
-            assertEquals("Test Box Class toString() Method", exp, act);
-        }
+        assertEquals("Test Box Class toString() Method", exp, act);
+    }
 
 }

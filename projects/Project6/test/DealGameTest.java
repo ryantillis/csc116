@@ -18,6 +18,9 @@ public class DealGameTest extends TestCase {
     /** DealGame object for tests */
     private DealGame game;
 
+    /** Before Test setup 
+     * @throws FileNotFoundException if file doesn't exist
+    */
     @Before
     public void setUp() throws FileNotFoundException {
         game = new DealGame(true);

@@ -1,4 +1,3 @@
-//import javax.swing.Box;
 import java.util.Random;
 
 /** BoxList Class
@@ -7,6 +6,7 @@ import java.util.Random;
  * @author Thomas Tillis
  */
 public class BoxList {
+    
     /** Array of Box objects */
     private Box[] boxes;
     /** Seed value for random numbers */
@@ -89,10 +89,8 @@ public class BoxList {
         rand.setSeed(seed);
         for(int i = 0; i < numberOfSwaps; i++) {
             swap1 = rand.nextInt(boxes.length);
-            System.out.println(swap1);
             Box swap1Box = boxes[swap1];
             swap2 = rand.nextInt(boxes.length);
-            System.out.println(swap2);
             boxes[swap1] = boxes[swap2];
             boxes[swap2] = swap1Box;
         }
